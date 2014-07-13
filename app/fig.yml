@@ -1,0 +1,25 @@
+data:
+  build: /app/dockerfiles/base/
+  command: true
+db:
+  build: /app/dockerfiles/mysql/
+  expose:
+    - "3306"
+  volumes_from:
+    - data
+app:
+  build: /app/dockerfiles/php/
+  volumes_from:
+    - data
+  links:
+    - db
+  expose:
+    - "9000"
+web:
+  build: /app/dockerfiles/nginx/
+  volumes_from:
+    - data
+  ports:
+    - "8080:80"
+  links:
+    - app
