@@ -1,4 +1,3 @@
-FROM base:latest
+FROM app_data:latest
 MAINTAINER damien.duportal@gmail.com
 
-VOLUME

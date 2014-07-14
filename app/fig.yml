@@ -2,7 +2,7 @@ data:
   build: /app/dockerfiles/base/
   command: true
 db:
-  build: /app/dockerfiles/mysql/
+  build: /app/dockerfiles/mariadb/
   expose:
     - "3306"
   volumes_from:
