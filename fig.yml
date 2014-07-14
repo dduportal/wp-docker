@@ -1,14 +1,14 @@
 data:
-  build: /app/dockerfiles/base/
+  build: /vagrant/dockerfiles/base/
   command: true
 db:
-  build: /app/dockerfiles/mariadb/
+  build: /vagrant/dockerfiles/mariadb/
   expose:
     - "3306"
   volumes_from:
     - data
-app:
-  build: /app/dockerfiles/php/
+php:
+  build: /vagrant/dockerfiles/php/
   volumes_from:
     - data
   links:
@@ -16,10 +16,11 @@ app:
   expose:
     - "9000"
 web:
-  build: /app/dockerfiles/nginx/
+  build: /vagrant/dockerfiles/nginx/
   volumes_from:
     - data
   ports:
-    - "8080:80"
+    - "80:80"
+    - "443:443"
   links:
-    - app
+    - php

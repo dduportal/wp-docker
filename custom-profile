@@ -1,0 +1,6 @@
+
+# Some custom aliases
+alias dfig='docker run -v /vagrant:/vagrant -t fig'
+alias ls='ls --color=tty'
+alias ll='ls -al'
+alias tailf='tail -f'

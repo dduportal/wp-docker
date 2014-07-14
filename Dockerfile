@@ -10,8 +10,8 @@ RUN curl --insecure -L https://github.com/orchardup/fig/releases/download/0.5.0/
 ENV DOCKER_HOST tcp://10.0.2.15:2375
 
 # Copy content
-ADD app /app
-WORKDIR /app
+VOLUME ["/vagrant"]
+WORKDIR /vagrant
 
 # This container is a chrooted fig
 ENTRYPOINT ["/usr/local/bin/fig"]
