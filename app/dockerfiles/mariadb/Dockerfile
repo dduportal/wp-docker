@@ -4,9 +4,7 @@ MAINTAINER damien.duportal@gmail.com
 
 VOLUME ["/DATA/db"]
 
-RUN yum install -y hostname mariadb-server 
-RUN rm -rf /var/lib/mysql
-RUN ln -s /DATA/db /var/lib/mysql 
+RUN yum install -y mariadb-server 
 
 COPY entrypoint.sh /
 COPY my.cnf /etc/
