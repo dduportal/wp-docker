@@ -14,5 +14,5 @@ VOLUME ["/vagrant"]
 WORKDIR /vagrant
 
 # This container is a chrooted fig
-#ENTRYPOINT ["/usr/local/bin/fig"]
-#CMD ["--version"]
+ENTRYPOINT ["/usr/local/bin/fig"]
+CMD ["--version"]
