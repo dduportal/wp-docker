@@ -1,4 +1,4 @@
-FROM app_data:latest
+FROM centos:centos7
 MAINTAINER damien.duportal@gmail.com
 
 RUN yum install -y php-fpm

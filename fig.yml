@@ -1,6 +1,9 @@
 data:
-  build: /vagrant/dockerfiles/base/
-  command: true
+  build: /vagrant/dockerfiles/data/
+  command: find /DATA
+  volumes:
+    - "/DATA/app"
+    - "/DATA/db"
 db:
   build: /vagrant/dockerfiles/mariadb/
   expose:
