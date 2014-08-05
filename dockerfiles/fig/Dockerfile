@@ -3,8 +3,7 @@ MAINTAINER damien.duportal@gmail.com
 
 # Install FIG and docker, using compressed cmd (AUFS / 42 layers...)
 RUN curl --insecure -L https://github.com/orchardup/fig/releases/download/0.5.2/linux > /usr/local/bin/fig \
-	&& curl --insecure -L -o /usr/local/bin/docker https://get.docker.io/builds/Linux/x86_64/docker-latest \
-	&& chmod +x /usr/local/bin/fig /usr/local/bin/docker
+	&& chmod +x /usr/local/bin/fig
 
 # Configure Env
 ENV DOCKER_HOST tcp://10.0.2.15:2375
