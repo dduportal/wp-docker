@@ -1,29 +1,26 @@
 data:
-  build: /vagrant/dockerfiles/data/
+  image: busybox:ubuntu-14.04
   command: find /DATA
   volumes:
-    - "/DATA/app"
-    - "/DATA/db"
+    - "/app"
 db:
-  build: /vagrant/dockerfiles/mariadb/
+  image: dockerfile/mariadb
   ports:
     - "3306:3306"
   volumes_from:
     - data
 php:
-  build: /vagrant/dockerfiles/php/
-  volumes_from:
-    - data
-  links:
-    - db
+  image: jprjr/php-fpm
   expose:
     - "9000"
+  environment:
+    - VIRTUAL_HOST=php_app
+    - VIRTUAL_PORT=9000
+  links:
+    - db
 web:
-  build: /vagrant/dockerfiles/nginx/
-  volumes_from:
-    - data
+  build: /vagrant/dockerfiles/dyn-nginx/
   ports:
     - "80:80"
-    - "443:443"
   links:
     - php
