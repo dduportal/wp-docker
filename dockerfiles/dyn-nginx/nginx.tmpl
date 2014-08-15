@@ -1,0 +1,103 @@
+
+user www-data;
+worker_processes  1;
+
+error_log  /dev/stdout info;
+
+pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  4096;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        off;
+    keepalive_timeout  65;
+
+    {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
+    upstream {{ $host }} {
+
+        {{ range $index, $value := $containers }}
+
+            {{ $addrLen := len $value.Addresses }}
+            {{/* If only 1 port exposed, use that */}}
+            {{ if eq $addrLen 1 }}
+                {{ with $address := index $value.Addresses 0 }}
+                   # {{$value.Name}}
+                   server {{ $address.IP }}:{{ $address.Port }};
+                {{ end }}
+
+            {{/* If more than one port exposed, use the one matching VIRTUAL_PORT env var */}}
+            {{ else if $value.Env.VIRTUAL_PORT }}
+                {{ range $i, $address := $value.Addresses }}
+                   {{ if eq $address.Port $value.Env.VIRTUAL_PORT }}
+                   # {{$value.Name}}
+                   server {{ $address.IP }}:{{ $address.Port }};
+                   {{ end }}
+                {{ end }}
+
+            {{/* Else default to standard php port */}}
+            {{ else }}
+                {{ range $i, $address := $value.Addresses }}
+                    {{ if eq $address.Port "9000" }}
+                    # {{$value.Name}}
+                    server {{ $address.IP }}:{{ $address.Port }};
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    }
+    {{ end }}
+
+    server {
+        listen       80;
+        server_name  _;
+
+        access_log  /dev/stdout;
+
+        root   html;
+        index  index.php index.html index.htm;
+
+        error_page   500 502 503 504  /50x.html;
+        
+        location = /50x.html {
+            root   html;
+        }
+
+        location = /favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+ 
+        location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+ 
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+ 
+        location ~ \.php$ {
+            include fastcgi.conf;
+            fastcgi_intercept_errors on;
+            fastcgi_pass php_app;
+        }
+ 
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+                expires max;
+                log_not_found off;
+        }
+
+        location ~ /\.ht {
+            deny  all;
+        }
+    }
+
+}
