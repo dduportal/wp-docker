@@ -1,6 +1,7 @@
 
 # Some custom aliases
-alias dfig='docker run -v /vagrant:/vagrant -v $(which docker):$(which docker) -t fig'
+alias dfig='docker run -v /vagrant:/vagrant -ti fig'
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}' $1"
 alias ls='ls --color=tty'
 alias ll='ls -al'
 alias tailf='tail -f'
