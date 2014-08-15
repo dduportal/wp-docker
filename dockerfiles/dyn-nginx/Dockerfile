@@ -10,8 +10,9 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/${DOCKER_GEN_VE
 	&& mv docker-gen /usr/local/bin/ \
 	&& chmod a+x /usr/local/bin/docker-gen \
 	&& rm -rf *gz
-RUN mkdir -p /app
 RUN sed -i '/daemon/d' /etc/nginx.conf
+RUN mkdir -p /app /srv/http
+RUN echo "Hello World" > /srv/http/index.html
 
 ADD . /app/
 
