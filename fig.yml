@@ -19,7 +19,7 @@ php:
   links:
     - db
 web:
-  build: /vagrant/dockerfiles/dyn-nginx/
+  build: /app/dockerfiles/dyn-nginx/
   ports:
     - "80:80"
   links:

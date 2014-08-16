@@ -1,7 +1,9 @@
 #!/bin/sh
 
-docker build -t fig /vagrant/dockerfiles/fig/
+#docker build -t fig /vagrant/dockerfiles/fig/
 
-docker run -v /vagrant:/vagrant fig build
-docker run -v /vagrant:/vagrant fig up -d
-docker run -v /vagrant:/vagrant fig scale php=3
+. /vagrant/custom-profile
+
+dfig-cli build
+dfig-cli up -d
+dfig-cli scale php=3
