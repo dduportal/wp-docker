@@ -1,8 +1,6 @@
 
-user www-data;
+user root;
 worker_processes  1;
-
-error_log  /dev/stdout info;
 
 pid        logs/nginx.pid;
 
@@ -58,16 +56,8 @@ http {
         listen       80;
         server_name  _;
 
-        access_log  /dev/stdout;
-
-        root   /srv/http;
+        root   /web;
         index  index.php index.html index.htm;
-
-        error_page   500 502 503 504  /50x.html;
-        
-        location = /50x.html {
-            root   html;
-        }
 
         location = /favicon.ico {
             log_not_found off;

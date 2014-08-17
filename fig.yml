@@ -1,8 +1,8 @@
 data:
-  image: busybox:ubuntu-14.04
-  command: find /DATA
+  build: /app/dockerfiles/data_img/
+  command: tail -f /web/*.log
   volumes:
-    - "/app"
+    - "/web"
 db:
   image: dockerfile/mariadb
   ports:
@@ -10,12 +10,12 @@ db:
   volumes_from:
     - data
 php:
-  image: jprjr/php-fpm
-  expose:
-    - "9000"
+  image: dduportal/phpfpm:debian7-1.0
   environment:
     - VIRTUAL_HOST=php_app
     - VIRTUAL_PORT=9000
+  volumes_from:
+    - data
   links:
     - db
 web:
@@ -24,3 +24,5 @@ web:
     - "80:80"
   links:
     - php
+  volumes_from:
+    - data
