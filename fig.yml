@@ -1,3 +1,7 @@
+data:
+  image: busybox:latest
+  volumes:
+    - /var/lib/mysql
 db:
   image: tutum/mariadb:latest
   #image: dockerfile/mariadb
@@ -5,9 +9,12 @@ db:
     MARIADB_PASS: "randpass"
   ports:
     - "3306:3306"
+loadDb:
+  build: ./dockerfiles/loadDb
+  links:
+    - db
 wordpress:
-  #image: tutum/wordpress-stackable:latest
-  build: ./dockerfiles/wp-php/
+  build: ./dockerfiles/wordpress/
   environment:
     VIRTUAL_HOST: php_app
     VIRTUAL_PORT: 9000
