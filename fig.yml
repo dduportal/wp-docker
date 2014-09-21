@@ -11,8 +11,10 @@ wordpress:
   environment:
     VIRTUAL_HOST: php_app
     VIRTUAL_PORT: 9000
-    DB_NAME: "wordpress"
-    DB_USER: "admin"
+    DB_NAME: wordpress
+    DB_USER: admin
+    DB_CHARSET: utf8
+    WP_DEBUG: false
   links:
     - db
 web:
