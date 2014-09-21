@@ -11,8 +11,6 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/${DOCKER_GEN_VE
 	&& chmod a+x /usr/local/bin/docker-gen \
 	&& rm -rf *gz
 RUN sed -i '/daemon/d' /etc/nginx.conf
-#RUN mkdir -p /app /srv/http
-#RUN echo "Hello World" > /sapp/index.html
 
 COPY entrypoint.sh /usr/local/bin/
 COPY nginx.tmpl /etc/

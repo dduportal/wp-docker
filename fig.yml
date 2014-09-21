@@ -1,21 +1,18 @@
-data:
-  build: /app/dockerfiles/data_img/
-  command: tail -f /web/*.log
-  volumes:
-    - "/web"
 db:
-  image: dockerfile/mariadb
+  image: tutum/mariadb:latest
+  #image: dockerfile/mariadb
+  environment:
+    MARIADB_PASS: "randpass"
   ports:
     - "3306:3306"
-  volumes_from:
-    - data
-php:
-  image: dduportal/phpfpm:debian7-1.0
+wordpress:
+  #image: tutum/wordpress-stackable:latest
+  build: ./dockerfiles/wp-php/
   environment:
-    - VIRTUAL_HOST=php_app
-    - VIRTUAL_PORT=9000
-  volumes_from:
-    - data
+    VIRTUAL_HOST: php_app
+    VIRTUAL_PORT: 9000
+    DB_NAME: "wordpress"
+    DB_USER: "admin"
   links:
     - db
 web:
@@ -23,6 +20,4 @@ web:
   ports:
     - "80:80"
   links:
-    - php
-  volumes_from:
-    - data
+    - wordpress

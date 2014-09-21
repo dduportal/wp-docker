@@ -1,8 +1,10 @@
 
 # Some custom aliases
-alias dfig-cli='docker run -v /vagrant:/app -e DOCKER_HOST=tcp://10.0.2.15:2375 dduportal/fig:debian7'
-alias dfig='docker run -v /vagrant:/app -e DOCKER_HOST=tcp://10.0.2.15:2375 -ti dduportal/fig'
+alias dfig-cli='docker run -v /vagrant:/app -e DOCKER_HOST=tcp://10.0.2.15:2375 dduportal/fig:latest'
+alias dfig='docker run -v /vagrant:/app -e DOCKER_HOST=tcp://10.0.2.15:2375 -ti dduportal/fig:latest'
 alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}' $1"
 alias ls='ls --color=tty'
 alias ll='ls -al'
 alias tailf='tail -f'
+
+export PATH=$PATH:/var/lib/boot2docker/bin/
