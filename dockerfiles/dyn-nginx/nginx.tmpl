@@ -19,7 +19,7 @@ http {
 
     {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
     upstream {{ $host }} {
-
+        ip_hash;
         {{ range $index, $value := $containers }}
 
             {{ $addrLen := len $value.Addresses }}
