@@ -1,0 +1,10 @@
+
+= Test
+
+Some code inclusion from the `fig.yml` file:
+
+[source,yaml]
+----
+include::fig.yml[]
+----
+
